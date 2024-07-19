@@ -9,14 +9,16 @@ class TripItem extends StatelessWidget {
   final int duration;
   final TripType tripType;
   final Season season;
-  TripItem(
-      {
-      required this.id,  
-      required this.title,
-      required this.imageUrl,
-      required this.duration,
-      required this.season,
-      required this.tripType});
+  final Function removeItem;
+  TripItem({
+    required this.id,
+    required this.title,
+    required this.imageUrl,
+    required this.duration,
+    required this.season,
+    required this.tripType,
+    required this.removeItem,
+  });
   String get SeasonText {
     if (season == Season.Winter) return 'شتاء';
     if (season == Season.Summer) return 'صيف';
@@ -34,10 +36,13 @@ class TripItem extends StatelessWidget {
   }
 
   void selectedItem(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      TripDetailedScreen.screenRoute,
-      arguments: id
-    );
+    Navigator.of(context)
+        .pushNamed(TripDetailedScreen.screenRoute, arguments: id)
+        .then((value) {
+      if (value != null) {
+        removeItem(id);
+      }
+    });
   }
 
   @override

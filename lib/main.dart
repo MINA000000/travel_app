@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:travel_app/screens/category_screen.dart';
 import 'package:travel_app/screens/category_trip_screen.dart';
+import 'package:travel_app/screens/filtered_screen.dart';
 import 'package:travel_app/screens/taps_screen.dart';
 import 'package:travel_app/screens/trip_detailed_screen.dart';
 
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
         '/' : (context) => TapsScreen(),
         CategoryTripScreen.screenRoute : (ctx) => CategoryTripScreen(),
         TripDetailedScreen.screenRoute : (ctx) => TripDetailedScreen(),
+        TapsScreen.screenRoute : (ctx) =>  TapsScreen(),
+        FilteredScreen.screenRoute : (ctx) => FilteredScreen(),
       },
     );
   }

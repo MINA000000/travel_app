@@ -83,6 +83,12 @@ class TripDetailedScreen extends StatelessWidget {
           ),
         ]),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.of(context).pop(tripId)
+        },
+        child: Icon(Icons.delete),
+      ),
     );
   }
 }
