@@ -9,7 +9,6 @@ class TripItem extends StatelessWidget {
   final int duration;
   final TripType tripType;
   final Season season;
-  final Function removeItem;
   TripItem({
     required this.id,
     required this.title,
@@ -17,7 +16,6 @@ class TripItem extends StatelessWidget {
     required this.duration,
     required this.season,
     required this.tripType,
-    required this.removeItem,
   });
   String get SeasonText {
     if (season == Season.Winter) return 'شتاء';
@@ -40,7 +38,7 @@ class TripItem extends StatelessWidget {
         .pushNamed(TripDetailedScreen.screenRoute, arguments: id)
         .then((value) {
       if (value != null) {
-        removeItem(id);
+        // removeItem(id);
       }
     });
   }

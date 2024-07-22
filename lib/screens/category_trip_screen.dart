@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/models/trip.dart';
+import 'package:travel_app/screens/filtered_screen.dart';
 import 'package:travel_app/widgets/trip_item.dart';
 
 import '../app_data.dart';
@@ -18,7 +19,22 @@ class _CategoryTripScreenState extends State<CategoryTripScreen> {
     super.initState();
   }
 
-  List<Trip> filteredData = [];
+  List<Trip> filteredData = Trips_data.where((element) {
+    // Check summer filter
+    if (FilteredScreen.isSummer && !element.isInSummer) {
+      return false;
+    }
+    // Check winter filter
+    if (FilteredScreen.isWinter && !element.isInWinter) {
+      return false;
+    }
+    // Check family filter
+    if (FilteredScreen.isForFamily && !element.isForFamilies) {
+      return false;
+    }
+    return true;
+  }).toList();
+
   String? categoryTitle = "";
   String? categoryId = "";
   @override
@@ -28,7 +44,7 @@ class _CategoryTripScreenState extends State<CategoryTripScreen> {
     categoryTitle = rr['title'];
     categoryId = rr['id'];
     filteredData =
-        Trips_data.where((element) => element.categories.contains(categoryId))
+        filteredData.where((element) => element.categories.contains(categoryId))
             .toList();
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
@@ -36,8 +52,7 @@ class _CategoryTripScreenState extends State<CategoryTripScreen> {
 
   void removeItem(String tripId) {
     setState(() {
-      
-    filteredData.removeWhere((element) => element.id == tripId);
+      filteredData.removeWhere((element) => element.id == tripId);
     });
   }
 
@@ -55,7 +70,6 @@ class _CategoryTripScreenState extends State<CategoryTripScreen> {
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return TripItem(
-              removeItem: removeItem,
               id: filteredData[index].id,
               title: filteredData[index].title,
               imageUrl: filteredData[index].imageUrl,

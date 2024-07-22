@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/screens/favorite_screen.dart';
 
 import '../app_data.dart';
 
-class TripDetailedScreen extends StatelessWidget {
+class TripDetailedScreen extends StatefulWidget {
   static const String screenRoute = '/trip-detailed';
-  const TripDetailedScreen({super.key});
+  Color primaryColor = Colors.red;
+  @override
+  State<TripDetailedScreen> createState() => _TripDetailedScreenState();
+}
 
+class _TripDetailedScreenState extends State<TripDetailedScreen> {
   @override
   Widget build(BuildContext context) {
     final tripId = ModalRoute.of(context)!.settings.arguments as String;
@@ -85,9 +90,15 @@ class TripDetailedScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          Navigator.of(context).pop(tripId)
+          if (!FavoriteScreen.favoriteTrips.contains(tripDetailed))
+            {
+              FavoriteScreen.favoriteTrips.add(tripDetailed),
+              setState(() {
+                widget.primaryColor = Colors.green;
+              })
+            }
         },
-        child: Icon(Icons.delete),
+        child: Icon(Icons.star, color: widget.primaryColor),
       ),
     );
   }
